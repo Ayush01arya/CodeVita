@@ -33,4 +33,4 @@ Our goal is to create a dynamic, real-time web-based orrery that visualizes cele
 
 1. Clone this repository:  
    ```bash
-   git clone https://github.com/YourUsername/orrery-web-app.git
+   git clone https://github.com/Ayush01arya/codevita.git
