@@ -25,7 +25,7 @@ Our goal is to create a dynamic, real-time web-based orrery that visualizes cele
 ### Tech Stack
 
 - **Frontend:** HTML, CSS, JavaScript (Three.js or D3.js for 3D rendering)
-- **Backend:** Python (Flask/Django) or Node.js for handling NEO data requests
+- **Backend:** Python (Flask) and requets for handling NEO data requests
 - **API:** NASA's Near-Earth Object Web Service (NeoWs)
 - **Version Control:** Git and GitHub for collaboration
 
@@ -33,4 +33,4 @@ Our goal is to create a dynamic, real-time web-based orrery that visualizes cele
 
 1. Clone this repository:  
    ```bash
-   git clone https://github.com/Ayush01arya/codevita.git
+   git clone https://github.com/Ayush01arya/CodeVita.git
