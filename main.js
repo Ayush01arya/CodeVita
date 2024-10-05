@@ -1,4 +1,16 @@
-let scene, camera, renderer, controls, tooltip, loadingDiv, selectedNeo;
+let scene, camera, renderer, controls, tooltip, loadingDiv, selectedObject;
+
+// Define planets data (name, distance from the sun, color)
+const planetsData = [
+  { name: "Mercury", distance: 30, color: 0xaaaaaa },
+  { name: "Venus", distance: 50, color: 0xffcc00 },
+  { name: "Earth", distance: 70, color: 0x0000ff },
+  { name: "Mars", distance: 90, color: 0xff0000 },
+  { name: "Jupiter", distance: 110, color: 0xff8800 },
+  { name: "Saturn", distance: 130, color: 0xffff00 },
+  { name: "Uranus", distance: 150, color: 0x00ffff },
+  { name: "Neptune", distance: 170, color: 0x0000cc },
+];
 
 function init() {
   // Create the scene
@@ -6,7 +18,7 @@ function init() {
 
   // Set up camera
   camera = new THREE.PerspectiveCamera(75, window.innerWidth / window.innerHeight, 0.1, 1000);
-  camera.position.set(0, 50, 150);
+  camera.position.set(0, 50, 300);
 
   // Renderer
   renderer = new THREE.WebGLRenderer();
@@ -16,21 +28,14 @@ function init() {
   // Add stars to the background
   addStars();
 
-  // Sun with texture
-  const sunTexture = new THREE.TextureLoader().load('/sun.png'); // Adjusted path
+  // Sun with basic color
   const sunGeometry = new THREE.SphereGeometry(10, 32, 32);
-  const sunMaterial = new THREE.MeshBasicMaterial({ map: sunTexture });
+  const sunMaterial = new THREE.MeshBasicMaterial({ color: 0xffff00 }); // Yellow sun
   const sun = new THREE.Mesh(sunGeometry, sunMaterial);
   scene.add(sun);
 
-  // Earth
-  const earthTexture = new THREE.TextureLoader().load('earth.png'); // Adjusted path
-  const earthGeometry = new THREE.SphereGeometry(3, 32, 32);
-  const earthMaterial = new THREE.MeshBasicMaterial({ map: earthTexture });
-  const earth = new THREE.Mesh(earthGeometry, earthMaterial);
-  earth.position.set(50, 0, 0);
-  earth.name = "Earth";
-  scene.add(earth);
+  // Add planets to the scene with orbits
+  addPlanets();
 
   // Orbit Controls
   controls = new THREE.OrbitControls(camera, renderer.domElement);
@@ -71,6 +76,38 @@ function addStars() {
   scene.add(stars);
 }
 
+// Function to add planets and their orbits to the scene
+function addPlanets() {
+  planetsData.forEach(planet => {
+    // Create planet mesh with color
+    const planetGeometry = new THREE.SphereGeometry(3, 32, 32);
+    const planetMaterial = new THREE.MeshBasicMaterial({ color: planet.color });
+    const planetMesh = new THREE.Mesh(planetGeometry, planetMaterial);
+
+    // Set planet position based on distance from the sun
+    planetMesh.position.set(planet.distance, 0, 0);
+    planetMesh.name = planet.name;
+
+    // Create the orbit path using dashed lines
+    const orbitPoints = [];
+    const segments = 64;
+    for (let i = 0; i <= segments; i++) {
+      const theta = (i / segments) * 2 * Math.PI;
+      const x = planet.distance * Math.cos(theta);
+      const z = planet.distance * Math.sin(theta);
+      orbitPoints.push(new THREE.Vector3(x, 0, z));
+    }
+
+    const orbitGeometry = new THREE.BufferGeometry().setFromPoints(orbitPoints);
+    const orbitMaterial = new THREE.LineDashedMaterial({ color: 0xffffff, dashSize: 3, gapSize: 2 });
+    const orbit = new THREE.Line(orbitGeometry, orbitMaterial);
+    orbit.computeLineDistances();
+
+    scene.add(planetMesh);
+    scene.add(orbit);
+  });
+}
+
 function onWindowResize() {
   camera.aspect = window.innerWidth / window.innerHeight;
   camera.updateProjectionMatrix();
@@ -101,7 +138,7 @@ function onMouseMove(event) {
   }
 }
 
-// Mouse click event for selecting NEOs
+// Mouse click event for selecting NEOs and planets
 function onMouseClick(event) {
   const mouse = new THREE.Vector2();
   mouse.x = (event.clientX / window.innerWidth) * 2 - 1;
@@ -114,17 +151,21 @@ function onMouseClick(event) {
 
   if (intersects.length > 0) {
     const object = intersects[0].object;
-    if (object.name !== "Earth") { // Check if it's not Earth
-      selectedNeo = object; // Store the selected NEO
-      displayNeoInfo(object.name); // Call to display NEO info
+    if (object.name) {
+      selectedObject = object; // Store the selected object
+      displayObjectInfo(object.name); // Call to display object info
     }
   }
 }
 
-// Function to display information of the selected NEO on canvas
-function displayNeoInfo(neoName) {
-  // You can implement a more complex logic to display details
-  alert(`You clicked on: ${neoName}`);
+// Function to display information of the selected planet or NEO
+function displayObjectInfo(objectName) {
+  const planet = planetsData.find(p => p.name === objectName);
+  if (planet) {
+    alert(`You clicked on: ${planet.name}\nDistance from Sun: ${planet.distance} million km`);
+  } else {
+    alert(`You clicked on: ${objectName}`);
+  }
 }
 
 // Fetch and display NEOs with ML classification
