@@ -1,16 +1,20 @@
 let scene, camera, renderer, controls, tooltip, loadingDiv, selectedObject;
+const clock = new THREE.Clock(); // Clock to track time
 
-// Define planets data (name, distance from the sun, color)
+// Define planets data (name, distance from the sun, color, and orbital speed)
 const planetsData = [
-  { name: "Mercury", distance: 30, color: 0xaaaaaa },
-  { name: "Venus", distance: 50, color: 0xffcc00 },
-  { name: "Earth", distance: 70, color: 0x0000ff },
-  { name: "Mars", distance: 90, color: 0xff0000 },
-  { name: "Jupiter", distance: 110, color: 0xff8800 },
-  { name: "Saturn", distance: 130, color: 0xffff00 },
-  { name: "Uranus", distance: 150, color: 0x00ffff },
-  { name: "Neptune", distance: 170, color: 0x0000cc },
+    { name: "Mercury", distance: 30, speed: 0.04, image: 'mercury.png', color: 0xaaaaaa },
+    { name: "Venus", distance: 50, speed: 0.03, image: 'venus.png', color: 0xffcc00 },
+    { name: "Earth", distance: 70, speed: 0.02, image: 'earth.png', color: 0x0000ff },
+    { name: "Mars", distance: 90, speed: 0.017, image: 'mars.png', color: 0xff4500 },
+    { name: "Jupiter", distance: 120, speed: 0.013, image: 'jupiter.png', color: 0xff9900 },
+    { name: "Saturn", distance: 150, speed: 0.01, image: 'saturn.png', color: 0xe0cda7 },
+    { name: "Uranus", distance: 180, speed: 0.008, image: 'uranus.png', color: 0x00ffff },
+    { name: "Neptune", distance: 210, speed: 0.006, image: 'neptune.png', color: 0x0000ff },
 ];
+
+
+const planetMeshes = []; // Store planet meshes for animation
 
 function init() {
   // Create the scene
@@ -18,7 +22,7 @@ function init() {
 
   // Set up camera
   camera = new THREE.PerspectiveCamera(75, window.innerWidth / window.innerHeight, 0.1, 1000);
-  camera.position.set(0, 50, 300);
+  camera.position.set(0, 100, 300);
 
   // Renderer
   renderer = new THREE.WebGLRenderer();
@@ -28,13 +32,13 @@ function init() {
   // Add stars to the background
   addStars();
 
-  // Sun with basic color
+  // Add the Sun
   const sunGeometry = new THREE.SphereGeometry(10, 32, 32);
   const sunMaterial = new THREE.MeshBasicMaterial({ color: 0xffff00 }); // Yellow sun
   const sun = new THREE.Mesh(sunGeometry, sunMaterial);
   scene.add(sun);
 
-  // Add planets to the scene with orbits
+  // Add planets to the scene
   addPlanets();
 
   // Orbit Controls
@@ -79,31 +83,29 @@ function addStars() {
 // Function to add planets and their orbits to the scene
 function addPlanets() {
   planetsData.forEach(planet => {
-    // Create planet mesh with color
-    const planetGeometry = new THREE.SphereGeometry(3, 32, 32);
+    const planetGeometry = new THREE.SphereGeometry(2, 16, 16);
     const planetMaterial = new THREE.MeshBasicMaterial({ color: planet.color });
     const planetMesh = new THREE.Mesh(planetGeometry, planetMaterial);
 
-    // Set planet position based on distance from the sun
-    planetMesh.position.set(planet.distance, 0, 0);
-    planetMesh.name = planet.name;
-
-    // Create the orbit path using dashed lines
-    const orbitPoints = [];
-    const segments = 64;
-    for (let i = 0; i <= segments; i++) {
-      const theta = (i / segments) * 2 * Math.PI;
-      const x = planet.distance * Math.cos(theta);
-      const z = planet.distance * Math.sin(theta);
-      orbitPoints.push(new THREE.Vector3(x, 0, z));
-    }
-
-    const orbitGeometry = new THREE.BufferGeometry().setFromPoints(orbitPoints);
-    const orbitMaterial = new THREE.LineDashedMaterial({ color: 0xffffff, dashSize: 3, gapSize: 2 });
-    const orbit = new THREE.Line(orbitGeometry, orbitMaterial);
-    orbit.computeLineDistances();
+    // Set position based on distance from the sun
+    planetMesh.position.x = planet.distance;
+    planetMesh.name = planet.name; // Store planet name
 
     scene.add(planetMesh);
+
+    // Initialize each planet's angle (starting at 0)
+    planetMeshes.push({
+      mesh: planetMesh,
+      speed: planet.speed,
+      distance: planet.distance,
+      angle: Math.random() * Math.PI * 2 // Random start angle for variety
+    });
+
+    // Add orbit path (circular orbit)
+    const orbitGeometry = new THREE.RingGeometry(planet.distance - 0.5, planet.distance + 0.5, 64);
+    const orbitMaterial = new THREE.MeshBasicMaterial({ color: 0xffffff, side: THREE.DoubleSide });
+    const orbit = new THREE.Mesh(orbitGeometry, orbitMaterial);
+    orbit.rotation.x = Math.PI / 2; // Rotate the ring to be horizontal
     scene.add(orbit);
   });
 }
@@ -138,7 +140,7 @@ function onMouseMove(event) {
   }
 }
 
-// Mouse click event for selecting NEOs and planets
+// Mouse click event for selecting NEOs
 function onMouseClick(event) {
   const mouse = new THREE.Vector2();
   mouse.x = (event.clientX / window.innerWidth) * 2 - 1;
@@ -153,22 +155,54 @@ function onMouseClick(event) {
     const object = intersects[0].object;
     if (object.name) {
       selectedObject = object; // Store the selected object
-      displayObjectInfo(object.name); // Call to display object info
+      displayObjectInfo(object); // Call to display object info
     }
   }
 }
 
-// Function to display information of the selected planet or NEO
-function displayObjectInfo(objectName) {
-  const planet = planetsData.find(p => p.name === objectName);
-  if (planet) {
-    alert(`You clicked on: ${planet.name}\nDistance from Sun: ${planet.distance} million km`);
-  } else {
-    alert(`You clicked on: ${objectName}`);
-  }
+// Use Alertify.js to display information of the selected object
+// Use Alertify.js to display information of the selected object
+function displayObjectInfo(neo) {
+  const impactProbability = neo.impactProbability !== undefined
+    ? (neo.impactProbability * 100).toFixed(2) + '%'
+    : '0%'; // If no data, show 0%
+
+  alertify.alert(
+    ' Code Vita',
+    `You clicked on: ${neo.name}<br>Impact Probability: ${impactProbability}<br>Distance from Earth: ${neo.distance || 'N/A'} km`
+  );
+}
+function filterObjects() {
+  const filterValue = document.getElementById('filter').value;
+
+  // Loop through all children in the scene
+  scene.children.forEach((object) => {
+    // Check if the object is a Mesh and has a name property
+    if (object instanceof THREE.Mesh && object.name) {
+      // Determine visibility based on the filter
+      if (filterValue === "all") {
+        object.visible = true; // Show all objects
+      } else if (filterValue === "planets") {
+        object.visible = planetsData.some(planet => planet.name === object.name); // Check if the object is a planet
+      } else if (filterValue === "neos") {
+        object.visible = object.name.startsWith("NEO"); // Assuming NEOs start with "NEO"
+      } else if (filterValue === "comets") {
+        object.visible = object.name.startsWith("Comet"); // Assuming comets start with "Comet"
+      } else if (filterValue === "hazardous") {
+        object.visible = object.impactProbability > 0.1; // Show hazardous objects based on a property
+      } else {
+        object.visible = false; // Hide objects for unrecognized filter values
+      }
+    }
+  });
 }
 
-// Fetch and display NEOs with ML classification
+
+// Fetch and display NEOs with classification and impact probability
+// Load the comet texture
+const cometTextureLoader = new THREE.TextureLoader();
+const cometTexture = cometTextureLoader.load('commet.png'); // Adjust the path to your comet image
+
 async function fetchAsteroids() {
   try {
     // Show loading effect
@@ -197,34 +231,58 @@ async function fetchAsteroids() {
         li.innerHTML = `${neo.name} - ${neo.classification}`;
         neoList.appendChild(li);
 
-        // Add NEO to the scene
+        // Add NEO to the scene with comet texture
         const asteroidGeometry = new THREE.SphereGeometry(1, 16, 16);
-        const asteroidMaterial = new THREE.MeshBasicMaterial({ color: neo.classification === 'Potentially Hazardous' ? 0xff0000 : 0x00ff00 });
+        const asteroidMaterial = new THREE.MeshBasicMaterial({ map: cometTexture }); // Use comet texture
         const asteroid = new THREE.Mesh(asteroidGeometry, asteroidMaterial);
 
-        // Randomize position
-        asteroid.position.set(Math.random() * 100 - 50, Math.random() * 100 - 50, Math.random() * 100 - 50);
+        asteroid.position.set(
+          (Math.random() - 0.5) * 500,
+          (Math.random() - 0.5) * 500,
+          (Math.random() - 0.5) * 500
+        );
+
         asteroid.name = neo.name;
 
+        // Add impact probability to the NEO object
+        asteroid.impactProbability = neo.impact_probability; // Assuming the API returns this data
+        asteroid.distance = neo.close_approach_data[0]?.miss_distance.kilometers; // Get distance from the first close approach
         scene.add(asteroid);
       });
-    }
+    }// Create NEO
+const neoGeometry = new THREE.SphereGeometry(1, 16, 16);
+const neoMaterial = new THREE.MeshBasicMaterial({ map: cometTexture }); // Example using the comet texture
+const neo = new THREE.Mesh(neoGeometry, neoMaterial);
+neo.name = `NEO-${neo.name}`; // Naming convention for NEOs
+scene.add(neo);
 
-    // Hide loading effect after fetching
+
+    // Hide loading effect after data is fetched
     loadingDiv.style.display = 'none';
-
   } catch (error) {
-    console.error("Error fetching NEO data:", error);
-    loadingDiv.style.display = 'none'; // Hide loading effect on error
+    console.error('Error fetching asteroids:', error);
+    loadingDiv.style.display = 'none';
   }
 }
 
-// Animation loop
+// Animate function to render the scene and update planet positions
 function animate() {
   requestAnimationFrame(animate);
+
+  const delta = clock.getDelta();
+
+  // Update planet positions based on their cumulative angles and speeds
+  planetMeshes.forEach(planet => {
+    // Increment the angle based on the speed and delta time
+    planet.angle += delta * planet.speed * 2 * Math.PI;
+
+    // Update planet's position using the new angle
+    planet.mesh.position.x = planet.distance * Math.cos(planet.angle);
+    planet.mesh.position.z = planet.distance * Math.sin(planet.angle);
+  });
+
   controls.update();
   renderer.render(scene, camera);
 }
 
-// Initialize the scene
 init();
