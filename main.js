@@ -239,7 +239,7 @@ async function fetchAsteroids() {
     // Show loading effect
     loadingDiv.style.display = 'block';
 
-    const response = await fetch('http://127.0.0.1:5000/api/neo/2024-09-01/2024-09-07'); // Sample date range
+    const response = await fetch('https://tensorflow.astroverse.in/api/neo/2024-09-01/2024-09-07'); // Sample date range
 
     if (!response.ok) {
       throw new Error(`HTTP error! Status: ${response.status}`);
@@ -300,20 +300,24 @@ scene.add(neo);
 function animate() {
   requestAnimationFrame(animate);
 
-  const delta = clock.getDelta();
-
-  // Update planet positions based on their cumulative angles and speeds
-  planetMeshes.forEach(planet => {
-    // Increment the angle based on the speed and delta time
-    planet.angle += delta * planet.speed * 2 * Math.PI;
-
-    // Update planet's position using the new angle
-    planet.mesh.position.x = planet.distance * Math.cos(planet.angle);
-    planet.mesh.position.z = planet.distance * Math.sin(planet.angle);
+  const delta = clock.getDelta(); // Seconds since the last call
+  planetMeshes.forEach(({ mesh, speed, angle }) => {
+    angle += speed * delta; // Update angle based on speed and time
+    mesh.position.x = Math.cos(angle) * mesh.distance; // Update x position
+    mesh.position.z = Math.sin(angle) * mesh.distance; // Update z position
+    mesh.rotation.y += 0.01; // Rotate the planet for better visualization
   });
 
-  controls.update();
+  // Update moon's position if added
+  if (planetMeshes.some(p => p.mesh.name === "Moon")) {
+    const earthMesh = planetMeshes.find(planet => planet.mesh.name === "Earth").mesh;
+    const moon = planetMeshes.find(p => p.mesh.name === "Moon");
+    moon.angle += moon.speed * delta;
+    moon.mesh.position.x = earthMesh.position.x + Math.cos(moon.angle) * moon.distance;
+    moon.mesh.position.z = earthMesh.position.z + Math.sin(moon.angle) * moon.distance;
+  }
+
+  controls.update(); // Update controls
   renderer.render(scene, camera);
 }
-
 init();
