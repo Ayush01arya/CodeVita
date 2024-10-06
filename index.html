@@ -74,32 +74,26 @@
 <body>
 
   <div id="orrery-container"></div>
-
-  <!-- Loading Spinner -->
-  <div id="loading" style="display: none;">Loading...</div>
-
-  <!-- List of Near Earth Objects -->
+  <div id="loading" style="display: none;">Loading NEOs...</div>
   <ul id="neo-list" class="list-group"></ul>
-
-  <!-- Dropdown for filtering celestial objects -->
   <select id="filter" onchange="filterObjects()">
-    <option value="all">All Objects</option>
+    <option value="all">All</option>
     <option value="planets">Planets</option>
-    <option value="neos">Near Earth Objects</option>
-    <option value="comets">Comets</option>
+    <option value="neos">Near-Earth Asteroids</option>
+    <option value="comets">Near-Earth Comets</option>
     <option value="hazardous">Potentially Hazardous Asteroids</option>
   </select>
-
-  <!-- Tooltip for displaying object information -->
   <div id="tooltip"></div>
 
   <!-- Include the Three.js library -->
   <script src="https://cdnjs.cloudflare.com/ajax/libs/three.js/r128/three.min.js"></script>
-  <!-- Include OrbitControls (make sure it's correctly imported) -->
   <script src="https://cdn.jsdelivr.net/npm/three@0.128.0/examples/js/controls/OrbitControls.js"></script>
+  <script src="https://cdn.jsdelivr.net/npm/three@0.153.0/examples/js/loaders/GLTFLoader.js"></script>
+  <script src="https://cdn.jsdelivr.net/npm/alertifyjs@1.14.0/build/alertify.min.js"></script>
+  <link rel="stylesheet" href="//cdn.jsdelivr.net/npm/alertifyjs@1.14.0/build/css/alertify.min.css"/>
+  <link rel="stylesheet" href="//cdn.jsdelivr.net/npm/alertifyjs@1.14.0/build/css/themes/default.min.css"/>
 
   <!-- Main JS script -->
   <script src="main.js"></script>
-
 </body>
 </html>
