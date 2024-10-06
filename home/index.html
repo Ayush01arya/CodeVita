@@ -37,7 +37,52 @@
             top: 0;
             z-index: 1000;
         }
+.group-members {
+    background-color: #2c1e4a; /* Dark purple background */
+    padding: 80px 0;
+}
 
+.group-members h2 {
+    text-align: center;
+    font-size: 2.5rem;
+    margin-bottom: 50px;
+    color: #ffffff;
+}
+
+.members-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+    gap: 30px;
+}
+
+.member-card {
+    background-color: rgba(255, 255, 255, 0.1);
+    padding: 20px;
+    border-radius: 10px;
+    text-align: center;
+    transition: transform 0.3s ease;
+}
+
+.member-card:hover {
+    transform: translateY(-10px);
+}
+
+.member-card img {
+    width: 150px;
+    height: 150px;
+    border-radius: 50%;
+    object-fit: cover;
+    margin-bottom: 15px;
+}
+
+.member-card h3 {
+    color: #ffd700;
+    margin-bottom: 10px;
+}
+
+.member-card p {
+    color: #ffffff;
+}
         nav .container {
             display: flex;
             justify-content: space-between;
@@ -370,41 +415,91 @@
         </div>
     </section>
 
-    <section class="planet-showcase" id="planets">
-        <div class="container">
-            <h2>Explore Near Earth Object</h2>
-            <div class="planet-slider">
-                <div class="planet-slide">
-                    <img src="https://images.unsplash.com/photo-1630694093867-4b947d812bf0?crop=entropy&cs=tinysrgb&fit=max&fm=jpg&ixid=MnwxfDB8MXxyYW5kb218MHx8cGxhbmV0fHx8fHx8MTY4MzA1MjY4Ng&ixlib=rb-4.0.3&q=80&utm_campaign=api-credit&utm_medium=referral&utm_source=unsplash_source&w=300" alt="Mercury">
-                    <h3>Mercury</h3>
-                </div>
-                <div class="planet-slide">
-                    <img src="https://images.unsplash.com/photo-1630694093976-4c00bfa3d600?crop=entropy&cs=tinysrgb&fit=max&fm=jpg&ixid=MnwxfDB8MXxyYW5kb218MHx8cGxhbmV0fHx8fHx8MTY4MzA1MjcxOA&ixlib=rb-4.0.3&q=80&utm_campaign=api-credit&utm_medium=referral&utm_source=unsplash_source&w=300" alt="Venus">
-                    <h3>Venus</h3>
-                </div>
-                <div class="planet-slide">
-                    <img src="https://images.unsplash.com/photo-1614730321146-b6fa6a46bcb4?crop=entropy&cs=tinysrgb&fit=max&fm=jpg&ixid=MnwxfDB8MXxyYW5kb218MHx8ZWFydGh8fHx8fHwxNjgzMDUyNzQ1&ixlib=rb-4.0.3&q=80&utm_campaign=api-credit&utm_medium=referral&utm_source=unsplash_source&w=300" alt="Earth">
-                    <h3>Earth</h3>
-                </div>
-                <!-- Add more planets here -->
+
+   <section class="planet-showcase" id="planets">
+    <div class="container">
+        <h2>Explore Near Earth Objects</h2>
+        <div class="planet-slider">
+            <div class="planet-slide">
+                <img src="https://images.unsplash.com/photo-1630694093867-4b947d812bf0?crop=entropy&cs=tinysrgb&fit=max&fm=jpg&ixid=MnwxfDB8MXxyYW5kb218MHx8cGxhbmV0fHx8fHx8MTY4MzA1MjY4Ng&ixlib=rb-4.0.3&q=80&utm_campaign=api-credit&utm_medium=referral&utm_source=unsplash_source&w=300" alt="Mercury">
+                <h3>Mercury</h3>
+            </div>
+            <div class="planet-slide">
+                <img src="https://upload.wikimedia.org/wikipedia/commons/5/54/Venus_-_December_23_2016.png" alt="Venus">
+                <h3>Venus</h3>
+            </div>
+            <div class="planet-slide">
+                <img src="https://images.unsplash.com/photo-1614730321146-b6fa6a46bcb4?crop=entropy&cs=tinysrgb&fit=max&fm=jpg&ixid=MnwxfDB8MXxyYW5kb218MHx8ZWFydGh8fHx8fHwxNjgzMDUyNzQ1&ixlib=rb-4.0.3&q=80&utm_campaign=api-credit&utm_medium=referral&utm_source=unsplash_source&w=300" alt="Earth">
+                <h3>Earth</h3>
+            </div>
+            <div class="planet-slide">
+                <img src="https://ss13polaris.com/images/f/fa/Planet_Mars.png" alt="Mars">
+                <h3>Mars</h3>
+            </div>
+            <div class="planet-slide">
+                <img src="https://stsci-opo.org/STScI-01EVSTFG11Z011TWQSTZ4ASBBW.png" alt="Ceres">
+                <h3>Ceres (Dwarf Planet)</h3>
+            </div>
+            <div class="planet-slide">
+                <img src="https://www.universetoday.com/wp-content/uploads/2014/10/PIA07740.jpg" alt="Eros">
+                <h3>433 Eros (Asteroid)</h3>
+            </div>
+            <div class="planet-slide">
+                <img src="https://services.meteored.com/img/article/ele-esta-voltando-cometa-halley-comecou-seu-caminho-de-volta-a-terra-1702176180818_1024.png">
+                <h3>Halley's Comet</h3>
+            </div>
+            <div class="planet-slide">
+                <img src="https://upload.wikimedia.org/wikipedia/commons/8/8d/Bennu_mosaic_OSIRIS-REx_%28square%29.png" alt="Bennu">
+                <h3>101955 Bennu (Asteroid)</h3>
             </div>
         </div>
-    </section>
-
-    <section class="space-news" id="news">
-        <div class="container">
-            <h2>Live Space News</h2>
-            <div id="news-container"></div>
+    </div>
+</section>
+<section class="group-members" id="members">
+    <div class="container">
+        <h2>Group Members</h2>
+        <div class="members-grid">
+            <div class="member-card">
+                <img src="https://github.com/Ayush01arya/CodeVita/raw/main/iMaGe/its.jpg" alt="Member 1">
+                <h3>AYUSH ARYA</h3>
+                <p>B.Tech 4th year from Graphic Era Hill University, Bhimtal</p>
+                <p>ayush0araya0@gmail.com</p>
+            </div>
+            <div class="member-card">
+                <img src="https://github.com/Ayush01arya/CodeVita/raw/main/iMaGe/IMG_20231018_160906.jpg" alt="Member 2">
+                <h3>YASH GUPTA</h3>
+                <p>B.Tech 3rd year from Graphic Era Hill University, Bhimtal </p>
+                <p>yashgupta11122004@gmail.com</p>
+            </div>
+            <div class="member-card">
+                <img src="https://github.com/Ayush01arya/CodeVita/raw/main/aayush.jpg" alt="Member 3">
+                <h3>AAYUSH PANDEY</h3>
+                <p>B.Tech 3rd year from Graphic Era Hill University, Bhimtal </p>
+                <p>aayushpandey691@gmail.com</p>
+            </div>
         </div>
-    </section>
+    </div>
+</section>
 
     <section class="solution-section" id="solution">
         <div class="container">
-            <h2>Test Your Space Knowledge</h2>
+            <h2>Problem Statments</h2>
             <div id="solution-container">
-                <div id="solution-question"></div>
-                <div id="solution-options"></div>
-            </div>
+<!--                <div id="solution-question">-->
+<!--                    <p> - Create an interactive orrery web app displaying planets, Near-Earth Asteroids, Comets, and Potentially Hazardous Asteroids. </p>-->
+<!--                </div>-->
+<!--                <div id="solution-question">-->
+<!--                    <p> - Enable user interaction to explore the orbits and movements of celestial bodies. </p>-->
+<!--                </div>-->
+<!--                 <div id="solution-question">-->
+<!--                    <p> - Incorporate real-time data on these objects for accurate visual representation. </p>-->
+<!--                </div>-->
+<!--                <div id="solution-question">-->
+<!--                    <p> - Highlight the importance of these objects for space exploration and planetary defense. </p>-->
+<!--                </div>-->
+<!--                <div id="solution-options"></div>-->
+<!--            </div>-->
+
         </div>
     </section>
 
