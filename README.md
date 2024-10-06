@@ -1,6 +1,6 @@
 # Orrery Web App - NASA Space Apps Challenge 2024
 
-![CodeVita Logo](path-to-logo.png) <!-- Add your team logo if applicable -->
+![CodeVita Logo](CodeVitalogo.png) <!-- Add your team logo if applicable -->
 
 ## Team CodeVita
 
