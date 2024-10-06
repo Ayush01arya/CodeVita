@@ -387,9 +387,44 @@ nav .logo span:first-child {
 
 nav .logo span:last-child {
     font-size: 28px;
-    color: white;              
+    color: white;
 }
 
+/* Styling for the solution section */
+.solution-section {
+    padding: 50px 0;
+    text-align: center;
+}
+
+.solution-section h2 {
+    font-size: 2rem;
+    margin-bottom: 20px;
+}
+
+/* Make iframe responsive */
+.iframe-container {
+    position: relative;
+    width: 100%;
+    padding-bottom: 56.25%; /* 16:9 aspect ratio */
+    height: 0;
+    overflow: hidden;
+}
+
+.iframe-container iframe {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    border: none;
+}
+
+/* Mobile responsiveness */
+@media (max-width: 768px) {
+    .solution-section h2 {
+        font-size: 1.5rem;
+    }
+}
 
     </style>
 </head>
@@ -508,27 +543,37 @@ nav .logo span:last-child {
     </div>
 </section>
 
-    <section class="solution-section" id="solution">
+    <section class="solution-section" id="problem">
         <div class="container">
             <h2>Problem Statments</h2>
             <div id="solution-container">
-<!--                <div id="solution-question">-->
-<!--                    <p> - Create an interactive orrery web app displaying planets, Near-Earth Asteroids, Comets, and Potentially Hazardous Asteroids. </p>-->
-<!--                </div>-->
-<!--                <div id="solution-question">-->
-<!--                    <p> - Enable user interaction to explore the orbits and movements of celestial bodies. </p>-->
-<!--                </div>-->
-<!--                 <div id="solution-question">-->
-<!--                    <p> - Incorporate real-time data on these objects for accurate visual representation. </p>-->
-<!--                </div>-->
-<!--                <div id="solution-question">-->
-<!--                    <p> - Highlight the importance of these objects for space exploration and planetary defense. </p>-->
-<!--                </div>-->
-<!--                <div id="solution-options"></div>-->
-<!--            </div>-->
+                <div id="solution-question">
+                    <p> - Create an interactive orrery web app displaying planets, Near-Earth Asteroids, Comets, and Potentially Hazardous Asteroids. </p>
+                </div>
+                <div id="solution-question">
+                    <p> - Enable user interaction to explore the orbits and movements of celestial bodies. </p>
+                </div>
+                 <div id="solution-question">
+                    <p> - Incorporate real-time data on these objects for accurate visual representation. </p>
+                </div>
+                <div id="solution-question">
+                    <p> - Highlight the importance of these objects for space exploration and planetary defense. </p>
+                </div>
+                <div id="solution-options"></div>
+            </div>
 
         </div>
     </section>
+
+     <section class="solution-section" id="solution">
+    <div class="container">
+        <h2>Solutions</h2>
+        <div class="iframe-container">
+            <iframe src="https://ayusharya.me/CodeVita/" frameborder="0" allowfullscreen></iframe>
+        </div>
+    </div>
+</section>
+
 
     <footer>
         <div class="container">
@@ -539,22 +584,33 @@ nav .logo span:last-child {
     <div class="stars" id="stars"></div>
 
     <script src="https://kit.fontawesome.com/your-fontawesome-kit.js" crossorigin="anonymous"></script>
-    <script>
-        // Create stars
-        const starsContainer = document.getElementById('stars');
-        const numberOfStars = 200;
+<script>
+    // Create stars
+    const starsContainer = document.getElementById('stars');
+    const numberOfStars = 200;
 
-        for (let i = 0; i < numberOfStars; i++) {
-            const star = document.createElement('div');
-            star.className = 'star';
-            star.style.width = ${Math.random() * 2 + 1}px;
-            star.style.height = star.style.width;
-            star.style.top = ${Math.random() * 100}%;
-            star.style.left = ${Math.random() * 100}%;
-            star.style.animationDelay = ${Math.random() * 5}s;
-            starsContainer.appendChild(star);
-        }
+    for (let i = 0; i < numberOfStars; i++) {
+        const star = document.createElement('div');
+        star.className = 'star';
+        star.style.width = `${Math.random() * 2 + 1}px`; // Use backticks for template literals
+        star.style.height = star.style.width; // Height should be the same as width
+        star.style.top = `${Math.random() * 100}%`; // Use backticks for template literals
+        star.style.left = `${Math.random() * 100}%`; // Use backticks for template literals
+        star.style.animationDelay = `${Math.random() * 5}s`; // Use backticks for template literals
+        starsContainer.appendChild(star);
+    }
 
-        // Smooth scrolling for navigation
-        document.querySelectorAll('a[href^="#"]').forEach(anchor => {
-            anchor.addEventListener('click', function (
+    // Smooth scrolling for navigation
+    document.querySelectorAll('a[href^="#"]').forEach(anchor => {
+        anchor.addEventListener('click', function (e) { // Complete the function definition
+            e.preventDefault(); // Prevent default anchor click behavior
+
+            // Smoothly scroll to the target section
+            document.querySelector(this.getAttribute('href')).scrollIntoView({
+                behavior: 'smooth'
+            });
+        });
+    });
+</script>
+
+    </body></html>
