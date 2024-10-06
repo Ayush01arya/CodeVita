@@ -239,7 +239,7 @@ async function fetchAsteroids() {
     // Show loading effect
     loadingDiv.style.display = 'block';
 
-    const response = await fetch('http://127.0.0.1:5000/api/neo/2024-09-01/2024-09-07'); // Sample date range
+    const response = await fetch('https://tensorflow.astroverse.in/api/neo/2024-09-01/2024-09-07'); // Sample date range
 
     if (!response.ok) {
       throw new Error(`HTTP error! Status: ${response.status}`);
