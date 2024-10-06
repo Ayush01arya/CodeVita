@@ -368,20 +368,82 @@
                 grid-template-columns: 1fr;
             }
         }
+nav .logo {
+    display: flex;
+    align-items: center;
+}
+
+nav .logo img {
+    width: 60px;
+    height: auto;
+    margin-right: 20px;
+}
+
+nav .logo span:first-child {
+    font-size: 28px;
+    color: yellow;
+    margin-right: 10px;
+}
+
+nav .logo span:last-child {
+    font-size: 28px;
+    color: white;
+}
+
+/* Styling for the solution section */
+.solution-section {
+    padding: 50px 0;
+    text-align: center;
+}
+
+.solution-section h2 {
+    font-size: 2rem;
+    margin-bottom: 20px;
+}
+
+/* Make iframe responsive */
+.iframe-container {
+    position: relative;
+    width: 100%;
+    padding-bottom: 56.25%; /* 16:9 aspect ratio */
+    height: 0;
+    overflow: hidden;
+}
+
+.iframe-container iframe {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    border: none;
+}
+
+/* Mobile responsiveness */
+@media (max-width: 768px) {
+    .solution-section h2 {
+        font-size: 1.5rem;
+    }
+}
+
     </style>
 </head>
 <body>
     <nav>
         <div class="container">
-            <div class="logo">CodeVita</div>
-            <ul class="nav-items">
-                <li><a href="#home">Home</a></li>
-                <li><a href="#features">Features</a></li>
-                <li><a href="#planets">Planets</a></li>
-                <li><a href="#problem">Problem Statement</a></li>
-                <li><a href="#solution">Solution</a></li>
-            </ul>
+        <div class="logo">
+            <span>CodeVita</span>
+            <img src="https://github.com/Ayush01arya/CodeVita/raw/main/iMaGe/logo.png" alt="CodeVita Logo">
+
         </div>
+        <ul class="nav-items">
+            <li><a href="#home">Home</a></li>
+            <li><a href="#features">Features</a></li>
+            <li><a href="#planets">Planets</a></li>
+            <li><a href="#problem">Problem Statement</a></li>
+            <li><a href="#solution">Solution</a></li>
+        </ul>
+    </div>
     </nav>
 
     <section class="hero" id="home">
@@ -415,64 +477,103 @@
         </div>
     </section>
 
-    <section class="planet-showcase" id="planets">
-        <div class="container">
-            <h2>Explore Near Earth Object</h2>
-            <div class="planet-slider">
-                <div class="planet-slide">
-                    <img src="https://images.unsplash.com/photo-1630694093867-4b947d812bf0?crop=entropy&cs=tinysrgb&fit=max&fm=jpg&ixid=MnwxfDB8MXxyYW5kb218MHx8cGxhbmV0fHx8fHx8MTY4MzA1MjY4Ng&ixlib=rb-4.0.3&q=80&utm_campaign=api-credit&utm_medium=referral&utm_source=unsplash_source&w=300" alt="Mercury">
-                    <h3>Mercury</h3>
-                </div>
-                <div class="planet-slide">
-                    <img src="https://images.unsplash.com/photo-1630694093976-4c00bfa3d600?crop=entropy&cs=tinysrgb&fit=max&fm=jpg&ixid=MnwxfDB8MXxyYW5kb218MHx8cGxhbmV0fHx8fHx8MTY4MzA1MjcxOA&ixlib=rb-4.0.3&q=80&utm_campaign=api-credit&utm_medium=referral&utm_source=unsplash_source&w=300" alt="Venus">
-                    <h3>Venus</h3>
-                </div>
-                <div class="planet-slide">
-                    <img src="https://images.unsplash.com/photo-1614730321146-b6fa6a46bcb4?crop=entropy&cs=tinysrgb&fit=max&fm=jpg&ixid=MnwxfDB8MXxyYW5kb218MHx8ZWFydGh8fHx8fHwxNjgzMDUyNzQ1&ixlib=rb-4.0.3&q=80&utm_campaign=api-credit&utm_medium=referral&utm_source=unsplash_source&w=300" alt="Earth">
-                    <h3>Earth</h3>
-                </div>
-                <!-- Add more planets here -->
+
+   <section class="planet-showcase" id="planets">
+    <div class="container">
+        <h2>Explore Near Earth Objects</h2>
+        <div class="planet-slider">
+            <div class="planet-slide">
+                <img src="https://images.unsplash.com/photo-1630694093867-4b947d812bf0?crop=entropy&cs=tinysrgb&fit=max&fm=jpg&ixid=MnwxfDB8MXxyYW5kb218MHx8cGxhbmV0fHx8fHx8MTY4MzA1MjY4Ng&ixlib=rb-4.0.3&q=80&utm_campaign=api-credit&utm_medium=referral&utm_source=unsplash_source&w=300" alt="Mercury">
+                <h3>Mercury</h3>
+            </div>
+            <div class="planet-slide">
+                <img src="https://upload.wikimedia.org/wikipedia/commons/5/54/Venus_-_December_23_2016.png" alt="Venus">
+                <h3>Venus</h3>
+            </div>
+            <div class="planet-slide">
+                <img src="https://images.unsplash.com/photo-1614730321146-b6fa6a46bcb4?crop=entropy&cs=tinysrgb&fit=max&fm=jpg&ixid=MnwxfDB8MXxyYW5kb218MHx8ZWFydGh8fHx8fHwxNjgzMDUyNzQ1&ixlib=rb-4.0.3&q=80&utm_campaign=api-credit&utm_medium=referral&utm_source=unsplash_source&w=300" alt="Earth">
+                <h3>Earth</h3>
+            </div>
+            <div class="planet-slide">
+                <img src="https://ss13polaris.com/images/f/fa/Planet_Mars.png" alt="Mars">
+                <h3>Mars</h3>
+            </div>
+            <div class="planet-slide">
+                <img src="https://stsci-opo.org/STScI-01EVSTFG11Z011TWQSTZ4ASBBW.png" alt="Ceres">
+                <h3>Ceres (Dwarf Planet)</h3>
+            </div>
+            <div class="planet-slide">
+                <img src="https://www.universetoday.com/wp-content/uploads/2014/10/PIA07740.jpg" alt="Eros">
+                <h3>433 Eros (Asteroid)</h3>
+            </div>
+            <div class="planet-slide">
+                <img src="https://services.meteored.com/img/article/ele-esta-voltando-cometa-halley-comecou-seu-caminho-de-volta-a-terra-1702176180818_1024.png">
+                <h3>Halley's Comet</h3>
+            </div>
+            <div class="planet-slide">
+                <img src="https://upload.wikimedia.org/wikipedia/commons/8/8d/Bennu_mosaic_OSIRIS-REx_%28square%29.png" alt="Bennu">
+                <h3>101955 Bennu (Asteroid)</h3>
             </div>
         </div>
-    </section>
+    </div>
+</section>
 <section class="group-members" id="members">
     <div class="container">
         <h2>Group Members</h2>
         <div class="members-grid">
             <div class="member-card">
-                <img src="path_to_member1_photo.jpg" alt="Member 1 Name">
-                <h3>Member 1 Name</h3>
-                <p>Brief description or role of Member 1</p>
+                <img src="https://github.com/Ayush01arya/CodeVita/raw/main/iMaGe/its.jpg" alt="Member 1">
+                <h3>AYUSH ARYA</h3>
+                <p>B.Tech 4th year from Graphic Era Hill University, Bhimtal</p>
+                <p>ayush0araya0@gmail.com</p>
             </div>
             <div class="member-card">
-                <img src="path_to_member2_photo.jpg" alt="Member 2 Name">
-                <h3>Member 2 Name</h3>
-                <p>Brief description or role of Member 2</p>
+                <img src="https://github.com/Ayush01arya/CodeVita/raw/main/iMaGe/IMG_20231018_160906.jpg" alt="Member 2">
+                <h3>YASH GUPTA</h3>
+                <p>B.Tech 3rd year from Graphic Era Hill University, Bhimtal </p>
+                <p>yashgupta11122004@gmail.com</p>
             </div>
             <div class="member-card">
-                <img src="path_to_member3_photo.jpg" alt="Member 3 Name">
-                <h3>Member 3 Name</h3>
-                <p>Brief description or role of Member 3</p>
+                <img src="https://github.com/Ayush01arya/CodeVita/raw/main/aayush.jpg" alt="Member 3">
+                <h3>AAYUSH PANDEY</h3>
+                <p>B.Tech 3rd year from Graphic Era Hill University, Bhimtal </p>
+                <p>aayushpandey691@gmail.com</p>
             </div>
         </div>
     </div>
 </section>
-    <section class="space-news" id="news">
+
+    <section class="solution-section" id="problem">
         <div class="container">
-            <h2>Live Space News</h2>
-            <div id="news-container"></div>
+            <h2>Problem Statments</h2>
+            <div id="solution-container">
+                <div id="solution-question">
+                    <p> - Create an interactive orrery web app displaying planets, Near-Earth Asteroids, Comets, and Potentially Hazardous Asteroids. </p>
+                </div>
+                <div id="solution-question">
+                    <p> - Enable user interaction to explore the orbits and movements of celestial bodies. </p>
+                </div>
+                 <div id="solution-question">
+                    <p> - Incorporate real-time data on these objects for accurate visual representation. </p>
+                </div>
+                <div id="solution-question">
+                    <p> - Highlight the importance of these objects for space exploration and planetary defense. </p>
+                </div>
+                <div id="solution-options"></div>
+            </div>
+
         </div>
     </section>
 
-    <section class="solution-section" id="solution">
-        <div class="container">
-            <h2>Test Your Space Knowledge</h2>
-            <div id="solution-container">
-                <div id="solution-question"></div>
-                <div id="solution-options"></div>
-            </div>
+     <section class="solution-section" id="solution">
+    <div class="container">
+        <h2>Solutions</h2>
+        <div class="iframe-container">
+            <iframe src="http://localhost:63342/codevita/index.html?_ijt=eovp63cpn25fl45mueq0kt56p3&_ij_reload=RELOAD_ON_SAVE" frameborder="0" allowfullscreen></iframe>
         </div>
-    </section>
+    </div>
+</section>
+
 
     <footer>
         <div class="container">
@@ -483,22 +584,33 @@
     <div class="stars" id="stars"></div>
 
     <script src="https://kit.fontawesome.com/your-fontawesome-kit.js" crossorigin="anonymous"></script>
-    <script>
-        // Create stars
-        const starsContainer = document.getElementById('stars');
-        const numberOfStars = 200;
+<script>
+    // Create stars
+    const starsContainer = document.getElementById('stars');
+    const numberOfStars = 200;
 
-        for (let i = 0; i < numberOfStars; i++) {
-            const star = document.createElement('div');
-            star.className = 'star';
-            star.style.width = ${Math.random() * 2 + 1}px;
-            star.style.height = star.style.width;
-            star.style.top = ${Math.random() * 100}%;
-            star.style.left = ${Math.random() * 100}%;
-            star.style.animationDelay = ${Math.random() * 5}s;
-            starsContainer.appendChild(star);
-        }
+    for (let i = 0; i < numberOfStars; i++) {
+        const star = document.createElement('div');
+        star.className = 'star';
+        star.style.width = `${Math.random() * 2 + 1}px`; // Use backticks for template literals
+        star.style.height = star.style.width; // Height should be the same as width
+        star.style.top = `${Math.random() * 100}%`; // Use backticks for template literals
+        star.style.left = `${Math.random() * 100}%`; // Use backticks for template literals
+        star.style.animationDelay = `${Math.random() * 5}s`; // Use backticks for template literals
+        starsContainer.appendChild(star);
+    }
 
-        // Smooth scrolling for navigation
-        document.querySelectorAll('a[href^="#"]').forEach(anchor => {
-            anchor.addEventListener('click', function (
+    // Smooth scrolling for navigation
+    document.querySelectorAll('a[href^="#"]').forEach(anchor => {
+        anchor.addEventListener('click', function (e) { // Complete the function definition
+            e.preventDefault(); // Prevent default anchor click behavior
+
+            // Smoothly scroll to the target section
+            document.querySelector(this.getAttribute('href')).scrollIntoView({
+                behavior: 'smooth'
+            });
+        });
+    });
+</script>
+
+    </body></html>
