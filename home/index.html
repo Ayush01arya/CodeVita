@@ -368,20 +368,47 @@
                 grid-template-columns: 1fr;
             }
         }
+nav .logo {
+    display: flex;
+    align-items: center;
+}
+
+nav .logo img {
+    width: 60px;
+    height: auto;
+    margin-right: 20px;
+}
+
+nav .logo span:first-child {
+    font-size: 28px;
+    color: yellow;
+    margin-right: 10px;
+}
+
+nav .logo span:last-child {
+    font-size: 28px;
+    color: white;              
+}
+
+
     </style>
 </head>
 <body>
     <nav>
         <div class="container">
-            <div class="logo">CodeVita</div>
-            <ul class="nav-items">
-                <li><a href="#home">Home</a></li>
-                <li><a href="#features">Features</a></li>
-                <li><a href="#planets">Planets</a></li>
-                <li><a href="#problem">Problem Statement</a></li>
-                <li><a href="#solution">Solution</a></li>
-            </ul>
+        <div class="logo">
+            <span>CodeVita</span>
+            <img src="https://github.com/Ayush01arya/CodeVita/raw/main/iMaGe/logo.png" alt="CodeVita Logo">
+
         </div>
+        <ul class="nav-items">
+            <li><a href="#home">Home</a></li>
+            <li><a href="#features">Features</a></li>
+            <li><a href="#planets">Planets</a></li>
+            <li><a href="#problem">Problem Statement</a></li>
+            <li><a href="#solution">Solution</a></li>
+        </ul>
+    </div>
     </nav>
 
     <section class="hero" id="home">
